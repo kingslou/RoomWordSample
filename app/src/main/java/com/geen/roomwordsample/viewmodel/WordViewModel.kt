@@ -3,6 +3,7 @@ package com.geen.roomwordsample.viewmodel
 import androidx.lifecycle.*
 import com.geen.roomwordsample.bean.Word
 import com.geen.roomwordsample.repository.WordRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 /**
@@ -16,11 +17,11 @@ class WordViewModel(private val wordRepository: WordRepository) : ViewModel() {
     val allWords : LiveData<List<Word>> = wordRepository.allWords.asLiveData()
 
 
-    fun addWord(word: Word) = viewModelScope.launch {
+    fun addWord(word: Word) = viewModelScope.launch(Dispatchers.IO) {
 
         wordRepository.addWord(word)
     }
-
+    
 }
 
 //传参

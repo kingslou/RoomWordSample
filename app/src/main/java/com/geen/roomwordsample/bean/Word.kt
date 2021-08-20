@@ -11,4 +11,4 @@ import androidx.room.PrimaryKey
  * @Desc
  */
 @Entity(tableName = "word_tab")
-data class Word(@PrimaryKey(autoGenerate = true) val id:Int, @ColumnInfo(name = "word") val word:String)
+data class Word(@PrimaryKey @ColumnInfo(name = "word") val word:String)

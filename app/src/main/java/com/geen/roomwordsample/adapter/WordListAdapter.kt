@@ -18,7 +18,7 @@ import com.geen.roomwordsample.bean.Word
 class WordListAdapter :ListAdapter<Word,WordListAdapter.WordViewHolder>(WordComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
-        return WordViewHolder(parent)
+        return WordViewHolder.createView(parent)
     }
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {

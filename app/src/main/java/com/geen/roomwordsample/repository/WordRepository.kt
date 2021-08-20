@@ -14,7 +14,7 @@ class WordRepository(private val wordDao: WordDao) {
 
     val allWords : Flow<List<Word>> = wordDao.getAllWords()
 
-
+    @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun addWord(word: Word){
         wordDao.insertWord(word)

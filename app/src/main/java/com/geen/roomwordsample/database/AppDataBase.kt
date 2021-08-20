@@ -7,6 +7,8 @@ import androidx.sqlite.db.SupportSQLiteOpenHelper
 import com.geen.roomwordsample.bean.Word
 import com.geen.roomwordsample.dao.WordDao
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * @Author LuoJi
@@ -18,29 +20,35 @@ public abstract class AppDataBase: RoomDatabase() {
 
     abstract fun getWordDao():WordDao
 
-    class DataBaseCallBack(scope: CoroutineScope):RoomDatabase.Callback(){
+    class DataBaseCallBack(private val scope: CoroutineScope):RoomDatabase.Callback(){
 
         override fun onCreate(db: SupportSQLiteDatabase) {
             super.onCreate(db)
             INSTANCE?.let {
-                val word = Word(1,"xxx")
-                it.getWordDao().insertWord(word)
+                scope.launch(Dispatchers.IO) {
+                    it.getWordDao().deleteAll()
+                    var word = Word("Hello")
+                    it.getWordDao().insertWord(word)
+                    word = Word("World!")
+                    it.getWordDao().insertWord(word)
+                }
             }
         }
 
     }
 
     companion object{
-
+        @Volatile
         private var INSTANCE : AppDataBase? = null
-        fun getDatabase(context: Context, scop:CoroutineScope):AppDataBase{
+        fun getDatabase(context: Context, scope:CoroutineScope):AppDataBase{
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDataBase::class.java,
                     "word_database"
                 )
-                    .addCallback(DataBaseCallBack(scop))
+                    .fallbackToDestructiveMigration()
+                    .addCallback(DataBaseCallBack(scope))
                     .build()
 
                 INSTANCE = instance
