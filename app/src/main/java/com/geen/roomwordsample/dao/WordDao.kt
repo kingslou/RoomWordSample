@@ -19,8 +19,8 @@ interface WordDao {
     fun getAllWords(): Flow<List<Word>>
 
     @Query("delete from word_tab")
-    fun deleteAll()
+    suspend fun deleteAll()
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertWord(word: Word)
+    @Insert()
+    suspend fun insertWord(word: Word)
 }

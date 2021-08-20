@@ -17,7 +17,7 @@ class WordViewModel(private val wordRepository: WordRepository) : ViewModel() {
     val allWords : LiveData<List<Word>> = wordRepository.allWords.asLiveData()
 
 
-    fun addWord(word: Word) = viewModelScope.launch(Dispatchers.IO) {
+    fun addWord(word: Word) = viewModelScope.launch{
 
         wordRepository.addWord(word)
     }
