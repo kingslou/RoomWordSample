@@ -12,6 +12,8 @@ import com.geen.roomwordsample.bean.Word
 import com.geen.roomwordsample.databinding.ActivityMainBinding
 import com.geen.roomwordsample.viewmodel.WordViewModel
 import com.geen.roomwordsample.viewmodel.WordViewModelFactory
+import kotlin.system.measureTimeMillis
+import kotlin.time.measureTime
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                 mAdapter?.submitList(it)
             }
         })
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
