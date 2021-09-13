@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
         mBinding.add.setOnClickListener {
             startActivityForResult(Intent(this,NewWordActivity::class.java),100)
         }
+
+        mBinding.navHost.setOnClickListener {
+            startActivity(Intent(this,NavMainActivity::class.java))
+        }
 //
         viewModel.allWords.observe(this, {
             it?.let {

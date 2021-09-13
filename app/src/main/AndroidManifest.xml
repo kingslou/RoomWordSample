@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".NewWordActivity"/>
+        <activity android:name=".NavMainActivity"/>
     </application>
 
 </manifest>

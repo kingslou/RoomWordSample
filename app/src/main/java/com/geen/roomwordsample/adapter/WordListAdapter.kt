@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.geen.roomwordsample.R
 import com.geen.roomwordsample.bean.Word
+import com.geen.roomwordsample.databinding.ItemWordBinding
 
 /**
  * @Author LuoJi
@@ -23,25 +25,17 @@ class WordListAdapter :ListAdapter<Word,WordListAdapter.WordViewHolder>(WordComp
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
         val wordInfo = getItem(position)
-        holder.setText(wordInfo.word)
+        holder.mbinding.str = wordInfo.word
     }
 
     class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val tvWord = itemView.findViewById<AppCompatTextView>(R.id.tvWord)
-
-        fun setText( wordText:String){
-            tvWord.text = wordText
-        }
-
+        val mbinding  = DataBindingUtil.findBinding<ItemWordBinding>(itemView) as ItemWordBinding
         companion object {
             fun createView(parent: ViewGroup): WordViewHolder {
-                val view: View =
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_word, parent, false)
-                return WordViewHolder(view)
+                val mBinding = DataBindingUtil.inflate( LayoutInflater.from(parent.context),R.layout.item_word,parent,false) as ItemWordBinding
+                return WordViewHolder(mBinding.root)
             }
         }
-
     }
 
     class WordComparator : DiffUtil.ItemCallback<Word>() {
